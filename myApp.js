@@ -3,16 +3,17 @@ let app = express();
 
 require("dotenv").config();
 
-app.get("/", (req, res) => {
-	absolutePath = __dirname + "/views/index.html";
-	res.sendFile(absolutePath);
-});
-
-app.use("/public", express.static(__dirname + "/public"));
 
 app.use((req, res, next) => {
 	console.log(`${req.method} ${req.path} - ${req.ip}`);
 	next();
+});
+
+app.use("/public", express.static(__dirname + "/public"));
+
+app.get("/", (req, res) => {
+	absolutePath = __dirname + "/views/index.html";
+	res.sendFile(absolutePath);
 });
 
 app.get("/json", (req, res) => {
@@ -24,5 +25,12 @@ app.get("/json", (req, res) => {
 
 	res.json(message);
 });
+
+app.get("/now", (req, res, next) => {
+	req.time = new Date().toString();
+	next();
+}, (req, res) => {
+	res.json({time: req.time});
+}); 
 
 module.exports = app;
