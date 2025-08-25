@@ -34,7 +34,8 @@ app.get("/now", (req, res, next) => {
 	next();
 }, (req, res) => {
 	res.json({time: req.time});
-}); 
+	}
+);
 
 app.get("/:word/echo", (req, res) => {
 	res.json({echo: req.params.word});
@@ -45,7 +46,7 @@ app.route("/name")
 		res.json({name: `${req.query.first} ${req.query.last}`});
 	})
 	.post((req, res) => {
-		
+		res.json({name: `${req.body.first} ${req.body.last}`});
 	});
 
 
